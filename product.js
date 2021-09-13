@@ -26,4 +26,26 @@ export default class Product{
     getTotal(){
         return this._amount * this._cost;
     }
+
+    static readForm(){
+        let inpCode = document.querySelector("#code");
+        let inpName = document.querySelector("#name");
+        let inpAmount = document.querySelector("#amount");
+        let inpCost = document.querySelector("#cost");
+
+        let code = inpCode.value;
+        let name = inpName.value;
+        let amount = inpAmount.value;
+        let cost = inpCost.value;
+        
+        if(!code || !name || !amount || !cost){
+            return false;
+        }
+
+        inpCode.value = "";
+        inpName.value = "";
+        inpAmount.value = "";
+        inpCost.value = "";
+        return new Product(code, name, Number(amount), Number(cost));
+    }
 }
