@@ -23,7 +23,7 @@ class App{
         let product = Product.readForm();
 
         if(this._inventory.lenght > 20){
-            this._inventory.noMore();
+            this._inventory._noMore();
         }
         
         if(!product){
@@ -31,13 +31,20 @@ class App{
             return;
         }
 
-        let added = this._inventory.addProduct();
+        let added = this._inventory.addProduct(product);
         if(!added){
             Swal.fire("ATENCIÓN", "Este producto ya fue registrado.", "warning");
             return;
         }
 
         Swal.fire("LISTO", "El producto ha sido registrado con éxito.", "success");
+    }
+
+    _searchProduct = () => {
+        let inpCode = document.querySelector("#code");
+        let code = inpCode.value;
+        this._inventory._searchProductByCode(code);
+        inpCode.value = "";
     }
 }
 

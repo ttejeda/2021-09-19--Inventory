@@ -1,10 +1,11 @@
 export default class Product{
 
-    constructor(code, name, amount, cost){
+    constructor(code, name, amount, cost, total){
         this._code = code;
         this._name = name;
         this._amount = amount;
         this._cost = cost;
+        this._total = total
     }
 
     getCode(){
@@ -24,7 +25,7 @@ export default class Product{
     }
 
     getTotal(){
-        return this._amount * this._cost;
+        return this._total;
     }
 
     static readForm(){
@@ -35,17 +36,19 @@ export default class Product{
 
         let code = inpCode.value;
         let name = inpName.value;
-        let amount = inpAmount.value;
-        let cost = inpCost.value;
+        let amount = Number(inpAmount.value);
+        let cost = Number(inpCost.value);
         
         if(!code || !name || !amount || !cost){
             return false;
         }
 
+        let total = amount * cost;
+
         inpCode.value = "";
         inpName.value = "";
         inpAmount.value = "";
         inpCost.value = "";
-        return new Product(code, name, Number(amount), Number(cost));
+        return new Product(code, name, amount, cost, total);
     }
 }
