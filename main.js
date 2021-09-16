@@ -7,23 +7,23 @@ class App{
         this._inventory = new Inventory();
         let btnAdd = document.querySelector("#btnAdd");
         let btnSearch = document.querySelector("#btnSearch");
-        let btnCancel = document.querySelector("#btnCancel");
         let btnDelete = document.querySelector("#btnDelete");
         let btnList = document.querySelector("#btnList");
         let btnTsil = document.querySelector("#btnTsil");
+        let btnInsert = document.querySelector("#btnInsert");
         btnAdd.addEventListener("click", this._addProduct);
         btnSearch.addEventListener("click", this._searchProduct);
-        btnCancel.addEventListener("click", this._cancel);
         btnDelete.addEventListener("click", this._deleteProduct);
         btnList.addEventListener("click", this._listProducts);
         btnTsil.addEventListener("click", this._tsilProducts);
+        btnInsert.addEventListener("click", this._insert);
     }
     
     _addProduct = () => {
         let product = Product.readForm();
 
         if(this._inventory.lenght > 20){
-            this._inventory._noMore();
+            this._inventory._showActions("Almacenamiento lleno.");
         }
         
         if(!product){
@@ -44,6 +44,13 @@ class App{
         let inpCode = document.querySelector("#code");
         let code = inpCode.value;
         this._inventory._searchProductByCode(code);
+        inpCode.value = "";
+    }
+    
+    _deleteProduct = () => {
+        let inpCode = document.querySelector("#code");
+        let code = inpCode.value;
+        this._inventory._deleteProductByCode(code);
         inpCode.value = "";
     }
 }
