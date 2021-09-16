@@ -53,6 +53,10 @@ class App{
         this._inventory._deleteProductByCode(code);
         inpCode.value = "";
     }
+
+    _listProducts = () => {
+        this._inventory._list();
+    }
 }
 
 new App();

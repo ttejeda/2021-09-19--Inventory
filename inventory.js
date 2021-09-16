@@ -56,18 +56,38 @@ export default class Inventory{
     }
 
     _deleteProductByCode(code){
+        if(!code){
+            this._showActions("<i>Coloca un código.</i>");
+            return;
+        }
+        
         let pos = this._searchByCode(code);
-        let product = this._inventory[pos];
-        for(let i = pos; i < this._inventory.length; i++){
-            if(i == this._inventory.length - 1){
-                this._inventory[i] = product;
-                let a = this._inventory.pop();
-                this._showActions(`Producto eliminado: ${a.getName()}, código:${a.getCode()}.`);
-                return;
+        if(pos >= 0){
+            console.log(pos)
+            let product = this._inventory[pos];
+            for(let i = pos; i < this._inventory.length; i++){
+                if(i == this._inventory.length - 1){
+                    this._inventory[i] = product;
+                    let a = this._inventory.pop();
+                    this._showActions(`Producto eliminado: ${a.getName()}, código:${a.getCode()}.`);
+                    return;
+                }
+                this._inventory[i] = this._inventory[i+1];
             }
-            this._inventory[i] = this._inventory[i+1];
+        }
+        
+        this._showActions("<i>Null</i>");
+    }
+
+    _list(){
+        if((this._inventory.length - 1) >= 0){
+            this._showActions("<b>Listado de productos:</b>")
+            for(let i = 0; i < this._inventory.length; i++){
+                this._showActions(`${i+1}. Código:${this._inventory[i].getCode()}. Nombre:${this._inventory[i].getName()}`);
+            }
+            return;
         }
 
-        this._showActions("<i>Null</i>");
+        this._showActions("Inventario vacío.");
     }
 }
