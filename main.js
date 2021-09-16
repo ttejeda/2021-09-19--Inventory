@@ -57,6 +57,10 @@ class App{
     _listProducts = () => {
         this._inventory._list();
     }
+
+    _tsilProducts = () => {
+        this._inventory._tsil();
+    }
 }
 
 new App();

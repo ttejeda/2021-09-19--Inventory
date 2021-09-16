@@ -63,7 +63,6 @@ export default class Inventory{
         
         let pos = this._searchByCode(code);
         if(pos >= 0){
-            console.log(pos)
             let product = this._inventory[pos];
             for(let i = pos; i < this._inventory.length; i++){
                 if(i == this._inventory.length - 1){
@@ -75,15 +74,27 @@ export default class Inventory{
                 this._inventory[i] = this._inventory[i+1];
             }
         }
-        
+
         this._showActions("<i>Null</i>");
     }
 
     _list(){
         if((this._inventory.length - 1) >= 0){
-            this._showActions("<b>Listado de productos:</b>")
+            this._showActions("<b>Listado de productos:</b>");
             for(let i = 0; i < this._inventory.length; i++){
-                this._showActions(`${i+1}. Código:${this._inventory[i].getCode()}. Nombre:${this._inventory[i].getName()}`);
+                this._showActions(`${i+1}. Código:${this._inventory[i].getCode()}. Nombre:${this._inventory[i].getName()}.`);
+            }
+            return;
+        }
+
+        this._showActions("Inventario vacío.");
+    }
+
+    _tsil(){
+        if((this._inventory.length - 1) >= 0){
+            this._showActions("<b>Listado de produtos(inverso):</b>");
+            for(let i = (this._inventory.length - 1); i >= 0; i--){
+                this._showActions(`${i+1}. Código:${this._inventory[i].getCode()}. Nombre:${this._inventory[i].getName()}.`);
             }
             return;
         }
