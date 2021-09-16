@@ -24,4 +24,18 @@ export default class Inventory{
 
       return -1;
     }
+
+    showActions(product){
+        this._console = document.querySelector("#console");
+        let action = document.createElement("p");
+        action.innerHTML = `<p>Agregado ${product.getName()}(${this.product.getCode()})</p>`;
+        this._console.appendChild(action);
+    }
+    
+    noMore(){
+        this._console = document.querySelector("#console");
+        let action = document.createElement("p");
+        action.innerHTML = "<p>Almacenamiento lleno.</p>";
+        this._console.appendChild(action);
+    }
 }
