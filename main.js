@@ -22,8 +22,9 @@ class App{
     _addProduct = () => {
         let product = Product.readForm();
 
-        if(this._inventory.lenght > 20){
+        if(this._inventory.length > 20){
             this._inventory._showActions("Almacenamiento lleno.");
+            return;
         }
         
         if(!product){
@@ -60,6 +61,24 @@ class App{
 
     _tsilProducts = () => {
         this._inventory._tsil();
+    }
+
+    _insert = () => {
+        let inpInsert = document.querySelector("#position");
+        let insert = Number(inpInsert.value);
+
+        if(!insert || insert == 0){
+            this._inventory._showActions("Coloca una posición.");
+            return;
+        }
+
+        inpInsert.value = "";
+        let product = Product.readForm();
+        if(!product){
+            this._inventory._showActions("Inserta los datos necesarios.");
+            return;
+        }
+        this._inventory._insertProduct(product, insert - 1);
     }
 }
 

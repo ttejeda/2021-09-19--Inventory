@@ -3,6 +3,10 @@ export default class Inventory{
     constructor(){
         this._inventory = new Array();
     }
+    
+    getLength(){
+        return this._inventory.length;
+    }
 
     addProduct(product){
         let pos = this._search(product);
@@ -100,5 +104,24 @@ export default class Inventory{
         }
 
         this._showActions("Inventario vacío.");
+    }
+
+    _insertProduct(product, position){
+        if(this._inventory.length < position){
+            this._showActions("Esa posición no existe.");
+            return;
+        }
+
+        let ab;
+        for(position; position < (this._inventory.length + 1); position++){
+            if(position == this._inventory.length){
+                this._inventory.push(product);
+                this._showActions(`Insertado ${product.getName()} en ${position}`);
+                return;
+            }
+            ab = this._inventory[position];
+            this._inventory[position] = product;
+            product = ab;
+        }
     }
 }
