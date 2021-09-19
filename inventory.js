@@ -13,11 +13,11 @@ export default class Inventory{
         if(pos == -1){
             this._inventory.push(product);
             this._showActions(`Agregado ${product.getName()}, código:${product.getCode()}.`);
-            return true;
+            return;
         }
 
         this._showActions(`Un producto con el código ${product.getCode()}, ya fue registrado.`);
-        return false;
+        return;
     }
 
     _search(product){

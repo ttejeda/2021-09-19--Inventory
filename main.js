@@ -28,17 +28,11 @@ class App{
         }
         
         if(!product){
-            Swal.fire("ERROR", "Todos los campos deben ser llenados.", "error");
+            this._inventory._showActions("¡Se deben de llenar todos los campos!");
             return;
         }
 
-        let added = this._inventory.addProduct(product);
-        if(!added){
-            Swal.fire("ATENCIÓN", "Este producto ya fue registrado.", "warning");
-            return;
-        }
-
-        Swal.fire("LISTO", "El producto ha sido registrado con éxito.", "success");
+        this._inventory.addProduct(product);
     }
 
     _searchProduct = () => {
