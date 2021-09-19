@@ -16,7 +16,8 @@ export default class Inventory{
             return true;
         }
 
-      return false;
+        this._showActions(`Un producto con el código ${product.getCode()}, ya fue registrado.`);
+        return false;
     }
 
     _search(product){
