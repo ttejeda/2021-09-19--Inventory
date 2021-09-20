@@ -20,7 +20,7 @@ class App{
     }
     
     _addProduct = () => {
-        let product = Product.readForm();
+        let product = this.readForm();
 
         if(this._inventory.length > 20){
             this._inventory._showActions("Almacenamiento lleno.");
@@ -36,17 +36,13 @@ class App{
     }
 
     _searchProduct = () => {
-        let inpCode = document.querySelector("#code");
-        let code = inpCode.value;
+        let code = this._getCodeForm();
         this._inventory._searchProductByCode(code);
-        inpCode.value = "";
     }
     
     _deleteProduct = () => {
-        let inpCode = document.querySelector("#code");
-        let code = inpCode.value;
+        let code = this._getCodeForm();
         this._inventory._deleteProductByCode(code);
-        inpCode.value = "";
     }
 
     _listProducts = () => {
@@ -73,6 +69,37 @@ class App{
             return;
         }
         this._inventory._insertProduct(product, insert - 1);
+    }
+
+    _getCodeForm(){
+        let inpCode = document.querySelector("#code");
+        let code = inpCode.value;
+        inpCode.value = "";
+        return code;
+    }
+
+    readForm(){
+        let inpCode = document.querySelector("#code");
+        let inpName = document.querySelector("#name");
+        let inpAmount = document.querySelector("#amount");
+        let inpCost = document.querySelector("#cost");
+
+        let code = inpCode.value;
+        let name = inpName.value;
+        let amount = Number(inpAmount.value);
+        let cost = Number(inpCost.value);
+        
+        if(!code || !name || !amount || !cost){
+            return false;
+        }
+
+        let total = amount * cost;
+
+        inpCode.value = "";
+        inpName.value = "";
+        inpAmount.value = "";
+        inpCost.value = "";
+        return new Product(code, name, amount, cost, total);
     }
 }
 
