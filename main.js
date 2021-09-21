@@ -23,34 +23,39 @@ class App{
         let product = this.readForm();
 
         if(this._inventory.length > 20){
-            this._inventory._showActions("Almacenamiento lleno.");
+            this._showActions("Almacenamiento lleno.");
             return;
         }
         
         if(!product){
-            this._inventory._showActions("¡Se deben de llenar todos los campos!");
+            this._showActions("¡Se deben de llenar todos los campos!");
             return;
         }
 
-        this._inventory.addProduct(product);
+        let result = this._inventory.addProduct(product);
+        this._showActions(result);
     }
 
     _searchProduct = () => {
         let code = this._getCodeForm();
-        this._inventory._searchProductByCode(code);
+        let result = this._inventory._searchProductByCode(code);
+        this._showActions(result);
     }
     
     _deleteProduct = () => {
         let code = this._getCodeForm();
-        this._inventory._deleteProductByCode(code);
+        let result = this._inventory._deleteProductByCode(code);
+        this._showActions(result);
     }
 
     _listProducts = () => {
-        this._inventory._list();
+        let result = this._inventory._list();
+        this._showActions(result);
     }
 
     _tsilProducts = () => {
-        this._inventory._tsil();
+        let result = this._inventory._tsil();
+        this._showActions(result);
     }
 
     _insert = () => {
@@ -58,17 +63,18 @@ class App{
         let insert = Number(inpInsert.value);
 
         if(!insert || insert == 0){
-            this._inventory._showActions("Coloca una posición.");
+            this._showActions("Coloca una posición.");
             return;
         }
 
         inpInsert.value = "";
-        let product = Product.readForm();
+        let product = this.readForm();
         if(!product){
-            this._inventory._showActions("Inserta los datos necesarios.");
+            this._showActions("Inserta los datos necesarios.");
             return;
         }
-        this._inventory._insertProduct(product, insert - 1);
+        let result = this._inventory._insertProduct(product, insert - 1);
+        this._showActions(result);
     }
 
     _getCodeForm(){
@@ -76,6 +82,13 @@ class App{
         let code = inpCode.value;
         inpCode.value = "";
         return code;
+    }
+
+    _showActions(message){
+        this._console = document.querySelector("#console");
+        let action = document.createElement("p");
+        action.innerHTML = `<p>${message}</p>`;
+        this._console.appendChild(action);
     }
 
     readForm(){

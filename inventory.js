@@ -12,12 +12,10 @@ export default class Inventory{
         let pos = this._search(product);
         if(pos == -1){
             this._inventory.push(product);
-            this._showActions(`Agregado ${product.getName()}, código:${product.getCode()}.`);
-            return;
+            return `Agregado ${product.getName()}, código:${product.getCode()}.`;
         }
 
-        this._showActions(`Un producto con el código ${product.getCode()}, ya fue registrado.`);
-        return;
+        return `Un producto con el código ${product.getCode()}, ya fue registrado.`;
     }
 
     _search(product){
@@ -34,20 +32,12 @@ export default class Inventory{
     _searchProductByCode(code){
         let pos = this._searchByCode(code);
         if(pos >= 0){
-            this._showActions(`Producto encontrado. Código:${this._inventory[pos].getCode()}, nombre:${this._inventory[pos].getName()},
+            return `Producto encontrado. Código:${this._inventory[pos].getCode()}, nombre:${this._inventory[pos].getName()},
                                 cantidad disponible:${this._inventory[pos].getAmount()}, precio individual:${this._inventory[pos].getCost()},
-                                costo total:${this._inventory[pos].getTotal()}.`);
-            return;
+                                costo total:${this._inventory[pos].getTotal()}.`;
         }
 
-        this._showActions("<i>Null</i>");
-    }
-
-    _showActions(message){
-        this._console = document.querySelector("#console");
-        let action = document.createElement("p");
-        action.innerHTML = `<p>${message}</p>`;
-        this._console.appendChild(action);
+        return "<i>Null</i>";
     }
 
     _searchByCode(code){
@@ -62,8 +52,7 @@ export default class Inventory{
 
     _deleteProductByCode(code){
         if(!code){
-            this._showActions("<i>Coloca un código.</i>");
-            return;
+            return "<i>Coloca un código.</i>";
         }
         
         let pos = this._searchByCode(code);
@@ -73,52 +62,50 @@ export default class Inventory{
                 if(i == this._inventory.length - 1){
                     this._inventory[i] = product;
                     let a = this._inventory.pop();
-                    this._showActions(`Producto eliminado: ${a.getName()}, código:${a.getCode()}.`);
-                    return;
+                    return `Producto eliminado: ${a.getName()}, código:${a.getCode()}.`;
                 }
                 this._inventory[i] = this._inventory[i+1];
             }
         }
 
-        this._showActions("<i>Null</i>");
+        return "<i>Null</i>";
     }
 
     _list(){
         if((this._inventory.length - 1) >= 0){
-            this._showActions("<b>Listado de productos:</b>");
+            let list = "<b>Listado de productos: </b>";
             for(let i = 0; i < this._inventory.length; i++){
-                this._showActions(`${i+1}. Código:${this._inventory[i].getCode()}. Nombre:${this._inventory[i].getName()}.`);
+                list = list + `<b>${i+1}</b>. Código:${this._inventory[i].getCode()}. Nombre:${this._inventory[i].getName()}. `;
             }
-            return;
+            return list;
         }
 
-        this._showActions("Inventario vacío.");
+        return "Inventario vacío.";
     }
 
     _tsil(){
+        let tsil = "<b>Listado de produtos(inverso):</b>";
         if((this._inventory.length - 1) >= 0){
-            this._showActions("<b>Listado de produtos(inverso):</b>");
             for(let i = (this._inventory.length - 1); i >= 0; i--){
-                this._showActions(`${i+1}. Código:${this._inventory[i].getCode()}. Nombre:${this._inventory[i].getName()}.`);
+                tsil +=`<b>${i+1}</b>. Código:${this._inventory[i].getCode()}. Nombre:${this._inventory[i].getName()}. `;
             }
-            return;
+            return tsil;
         }
 
-        this._showActions("Inventario vacío.");
+        return "Inventario vacío.";
     }
 
     _insertProduct(product, position){
         if(this._inventory.length < position){
-            this._showActions("Esa posición no existe.");
-            return;
+            return "Esa posición no existe.";
         }
+        let name = product.getName();
 
         let ab;
-        for(position; position < (this._inventory.length + 1); position++){
+        for(position; position <= this._inventory.length + 1; position++){
             if(position == this._inventory.length){
                 this._inventory.push(product);
-                this._showActions(`Insertado ${product.getName()} en ${position}`);
-                return;
+                return `Insertado ${name} en ${position}`;
             }
             ab = this._inventory[position];
             this._inventory[position] = product;
