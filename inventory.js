@@ -68,7 +68,7 @@ export default class Inventory{
 
     tsil(){
         if((this._inventory.length - 1) >= 0){
-            let tsil = "<b>Listado de produtos(inverso):</b>";
+            let tsil = "<b>Listado de produtos(inverso): </b>";
             for(let i = (this._inventory.length - 1); i >= 0; i--){
                 tsil +=`<b>${i+1}</b>. Código:${this._inventory[i].getCode()}. Nombre:${this._inventory[i].getName()}. `;
             }
@@ -84,7 +84,7 @@ export default class Inventory{
         }
 
         let ab;
-        for(position; position <= this._inventory.length + 1; position++){
+        for(position; position <= this._inventory.length; position++){
             if(position == this._inventory.length){
                 this._inventory.push(product);
                 return true;
