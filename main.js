@@ -5,12 +5,12 @@ class App{
 
     constructor(){
         this._inventory = new Inventory();
-        let btnAdd = document.querySelector("#btnAdd");
-        let btnSearch = document.querySelector("#btnSearch");
-        let btnDelete = document.querySelector("#btnDelete");
-        let btnList = document.querySelector("#btnList");
-        let btnTsil = document.querySelector("#btnTsil");
-        let btnInsert = document.querySelector("#btnInsert");
+        let btnAdd = document.getElementById("btnAdd");
+        let btnSearch = document.getElementById("btnSearch");
+        let btnDelete = document.getElementById("btnDelete");
+        let btnList = document.getElementById("btnList");
+        let btnTsil = document.getElementById("btnTsil");
+        let btnInsert = document.getElementById("btnInsert");
         btnAdd.addEventListener("click", this._addProduct);
         btnSearch.addEventListener("click", this._searchProduct);
         btnDelete.addEventListener("click", this._deleteProduct);
@@ -20,7 +20,7 @@ class App{
     }
     
     _addProduct = () => {
-        let product = this.readForm();
+        let product = this._readForm();
 
         if(this._inventory.length > 20){
             this._showActions("Almacenamiento lleno.");
@@ -33,33 +33,52 @@ class App{
         }
 
         let result = this._inventory.addProduct(product);
-        this._showActions(result);
+        if(!result){
+            this._showActions(`El producto con el código ${product.getCode()}, ya fue registrado.`);
+            return;
+        }
+
+        this._showActions(`Agregado ${product.getName()}, código ${product.getCode()}.`);
     }
 
     _searchProduct = () => {
         let code = this._getCodeForm();
-        let result = this._inventory._searchProductByCode(code);
-        this._showActions(result);
+        let result = this._inventory.searchProductByCode(code);
+        if(!result){
+            this._showActions(result);
+            return;
+        }
+
+        this._showActions(`Nombre:${result.getName()}. Código:${result.getCode()}.`);
     }
     
     _deleteProduct = () => {
         let code = this._getCodeForm();
-        let result = this._inventory._deleteProductByCode(code);
-        this._showActions(result);
+        if(!code){
+            this._showActions("Coloca un código.");
+            return;
+        }
+        let result = this._inventory.deleteProductByCode(code);
+        if(!result){
+            this._showActions(result);
+            return;
+        }
+
+        this._showActions(`Producto eliminado: ${result.getName()}, código:${result.getCode()}.`);
     }
 
     _listProducts = () => {
-        let result = this._inventory._list();
+        let result = this._inventory.list();
         this._showActions(result);
     }
 
     _tsilProducts = () => {
-        let result = this._inventory._tsil();
+        let result = this._inventory.tsil();
         this._showActions(result);
     }
 
     _insert = () => {
-        let inpInsert = document.querySelector("#position");
+        let inpInsert = document.getElementById("position");
         let insert = Number(inpInsert.value);
 
         if(!insert || insert == 0){
@@ -68,34 +87,39 @@ class App{
         }
 
         inpInsert.value = "";
-        let product = this.readForm();
+        let product = this._readForm();
         if(!product){
             this._showActions("Inserta los datos necesarios.");
             return;
         }
-        let result = this._inventory._insertProduct(product, insert - 1);
-        this._showActions(result);
+        let result = this._inventory.insertProduct(product, insert - 1);
+        if(!result){
+            this._showActions("Esta posición no existe.");
+            return;
+        }
+
+        this._showActions(`Insertado ${product.getName()} en ${insert}`);
     }
 
     _getCodeForm(){
-        let inpCode = document.querySelector("#code");
+        let inpCode = document.getElementById("code");
         let code = inpCode.value;
         inpCode.value = "";
         return code;
     }
 
     _showActions(message){
-        this._console = document.querySelector("#console");
+        this._console = document.getElementById("result");
         let action = document.createElement("p");
         action.innerHTML = `<p>${message}</p>`;
         this._console.appendChild(action);
     }
 
-    readForm(){
-        let inpCode = document.querySelector("#code");
-        let inpName = document.querySelector("#name");
-        let inpAmount = document.querySelector("#amount");
-        let inpCost = document.querySelector("#cost");
+    _readForm(){
+        let inpCode = document.getElementById("code");
+        let inpName = document.getElementById("name");
+        let inpAmount = document.getElementById("amount");
+        let inpCost = document.getElementById("cost");
 
         let code = inpCode.value;
         let name = inpName.value;
