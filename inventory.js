@@ -3,10 +3,6 @@ export default class Inventory{
     constructor(){
         this._inventory = new Array();
     }
-    
-    getLength(){
-        return this._inventory.length;
-    }
 
     addProduct(product){
         let pos = this._searchByCode(product.getCode());
@@ -58,7 +54,8 @@ export default class Inventory{
         if((this._inventory.length - 1) >= 0){
             let list = "<b>Listado de productos: </b>";
             for(let i = 0; i < this._inventory.length; i++){
-                list = list + `<b>${i+1}</b>. Código:${this._inventory[i].getCode()}. Nombre:${this._inventory[i].getName()}. `;
+                console.log(this._inventory);
+                list += `<b>${i+1}</b>. Código:${this._inventory[i].getCode()}. Nombre:${this._inventory[i].getName()}. `;
             }
             return list;
         }
@@ -70,7 +67,7 @@ export default class Inventory{
         if((this._inventory.length - 1) >= 0){
             let tsil = "<b>Listado de produtos(inverso): </b>";
             for(let i = (this._inventory.length - 1); i >= 0; i--){
-                tsil +=`<b>${i+1}</b>. Código:${this._inventory[i].getCode()}. Nombre:${this._inventory[i].getName()}. `;
+                tsil += `<b>${i+1}</b>. Código:${this._inventory[i].getCode()}. Nombre:${this._inventory[i].getName()}. `;
             }
             return tsil;
         }
